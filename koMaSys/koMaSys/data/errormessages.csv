@@ -1,0 +1,3 @@
+ID;createdDate;createdFromUserId;studyCourse;module;source;fault;suggestion;tutorUserId;inProcess;corrected;rejected;answer;read;archive;
+1;09.02.2022;2;B. Sc. Wirtschaftsinformatik;IMT101;PDF-Skript;S. 33 Absatz 2 Tippfehler bei Berecnung;Berechnung;1;0;0;0;;;0;
+2;08.01.2022;2;B. Sc. Wirtschaftsinformatik;IPWA01;PDF-Skript;S. 15 Absatz 1 Tippfehler bei Prorammierung müsste Programmierung sein;;1;0;1;0;Neue Version in MyCampus;01.02.2022;1;

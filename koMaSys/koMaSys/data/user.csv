@@ -1,0 +1,3 @@
+ID;username;firstname;lastname;password;student;courseOfStudy;
+1;tutor.majer;Sven;Majer;Tmajer01;0;;
+2;student.hoffmann;Hans;Hoffmann;SHoffmann02;1;BWirtschaftsinformatik;
