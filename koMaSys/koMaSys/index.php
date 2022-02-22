@@ -82,8 +82,6 @@
                                 </table>
                             </div>
                         </div>
-
-                        <p><a href="#" class="col-3 mt-4 mb-4" role="button">Archiv <span class="badge badge-secondary">1</span></a></p>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
