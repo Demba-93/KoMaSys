@@ -1,3 +1,15 @@
+<?php
+session_start();
+if(!isset($_SESSION['userid'])) {
+    die('Bitte zuerst <a href="login.php">einloggen</a>');
+}
+ 
+//Abfrage der Nutzer ID vom Login
+$userid = $_SESSION['userid'];
+ 
+echo "Hallo User: ".$userid;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -16,7 +28,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">KoMaSys</a>
+            <a class="navbar-brand ps-3" href="index.php">KoMaSys</a>
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         </nav>
         <div id="layoutSidenav">
@@ -24,14 +36,14 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Hauptmenü
                             </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Angemeldet als:<br/>Username <a href="./login.html">Ausloggen</a></div>
+                        <div class="small">Angemeldet als:<br/>Username <a href="./login.php">Ausloggen</a></div>
                     </div>
                 </nav>
             </div>
@@ -40,7 +52,7 @@
                     <div class="container-fluid px-4">
                         <div class="row">
                             <h1 class="mt-4 col-8">Fehlermeldungen</h1>
-                            <a href="./newerror.html" class="col-3 mt-4 mb-4 btn btn-secondary" role="button"><i class="fa fa-plus-circle"></i> Neue Fehlermeldung</a>
+                            <a href="./newerror.php" class="col-3 mt-4 mb-4 btn btn-secondary" role="button"><i class="fa fa-plus-circle"></i> Neue Fehlermeldung</a>
                         </div>
                         <div class="card mb-4">
                             <div class="card-body">
@@ -65,14 +77,14 @@
                                     </tfoot>
                                     <tbody>
                                         <tr>
-                                            <td><a href="./answer.html">23</a></td>
+                                            <td><a href="./answer.php">23</a></td>
                                             <td>IPWA01</td>
                                             <td>PDF Skript</td>
                                             <td>2011/04/25</td>
                                             <td>offen</td>
                                         </tr>
                                         <tr>
-                                            <td><a href="./archive.html">27</a></td>
+                                            <td><a href="./archive.php">27</a></td>
                                             <td>IOBP</td>
                                             <td>Online Test</td>
                                             <td>2011/07/25</td>

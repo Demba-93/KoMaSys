@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>KoMaSys - Fehlermeldung</title>
+        <title>KoMaSys - Fehlererfassung</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -14,7 +14,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">KoMaSys</a>
+            <a class="navbar-brand ps-3" href="index.php">KoMaSys</a>
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         </nav>
         <div id="layoutSidenav">
@@ -22,14 +22,14 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Hauptmenü
                             </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Angemeldet als:<br/>Username <a href="./login.html">Ausloggen</a></div>
+                        <div class="small">Angemeldet als:<br/>Username <a href="./login.php">Ausloggen</a></div>
                     </div>
                 </nav>
             </div>
@@ -40,37 +40,47 @@
                         Fehlermeldung
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <label class="col-4">ID</label>
-                            <label class="col-8">23</label>
-                        </div>
-                        <div class="row">
-                            <label class="col-4">Kurs</label>
-                            <label class="col-8">IPWA01</label>
-                        </div>
-                        <div class="row">
-                            <label class="col-4">Fehlerquelle</label>
-                            <label class="col-8">PDF-Skript</label>
-                        </div>
-                        <div class="row">
-                            <label class="col-4">Meldedatum</label>
-                            <label class="col-8">2011/04/25</label>
-                        </div>
-                        <div class="row">
-                            <label class="col-4">Fehlerbeschreibung</label>
-                            <label class="col-8">Es gibt einen Tippfehler in Absatz 2 auf S. 34.</label>
-                        </div>
-                        <div class="row">
-                            <label class="col-4">Korrekturvorschlag</label>
-                            <label class="col-8"></label>
-                        </div>
                         <form>
                             <div class="form-group row">
-                                <label for="note" class="col-4">Antwort</label>
-                                <textarea class="form-control col-8" id="note"></textarea>
+                                <label class="col-4" for="studycourse">Studiengang *</label>
+                                <select class="form-control col-8" id="studycourse">
+                                    <option>B. Sc. Informatik</option>
+                                    <option>B. Sc. Wirtschaftsinformatik</option>
+                                </select>
                             </div>
-                            <button type="submit" class="btn btn-success mt-2">Abgeschlossen</button>
-                            <button type="submit" class="btn btn-danger mt-2">Ablehnen</button>
+                            <div class="form-group row">
+                                <label class="col-4" for="module">Kurs *</label>
+                                <select class="form-control col-8" id="module">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-4" for="source">Fehlerquelle *</label>
+                                <select class="form-control col-8" id="source">
+                                  <option>PDF-Skript</option>
+                                  <option>Gedrucktes Skript</option>
+                                  <option>Online Test</option>
+                                  <option>Podcast</option>
+                                  <option>Videogalerie</option>
+                                  <option>Reader (IU Learn App)</option>
+                                  <option>Interactive Quiz (IU Learn App)</option>
+                                  <option>KurzVideos (IU Learn App)</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="fault" class="col-4">Fehlerbeschreibung *</label>
+                                <textarea class="form-control col-8" id="fault"></textarea>
+                            </div>
+                            <div class="form-group row">
+                                <label for="suggestion" class="col-4">Korrekturvorschlag</label>
+                                <textarea class="form-control col-8" id="suggestion"></textarea>
+                            </div>
+                            <span class="small">* Pflichtfeld</span><br/>
+                            <button type="submit" class="btn btn-info mt-2">Senden</button>
                         </form>
                     </div>
                 </main>

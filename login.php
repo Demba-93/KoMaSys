@@ -20,18 +20,18 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                     <div class="card-body">
-                                        <form>
+                                        <form method="post" >
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                                <input class="form-control" name="username" id="inputEmail" type="text" placeholder="name@example.com" />
                                                 <label for="inputEmail">Benutzername</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" placeholder="Password" />
+                                                <input class="form-control" name="password" id="inputPassword" type="password" placeholder="Password" />
                                                 <label for="inputPassword">Passwort</label>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                 <a class="small" href="https://identity.iubh.de/service/public/forgottenpassword" target="blank">Passwort vergessen?</a>
-                                                <a class="btn btn-primary" href="index.html">Login</a>
+                                                <input type="submit" value="Login"/>
                                             </div>
                                         </form>
                                     </div>
@@ -60,3 +60,22 @@
         <script src="js/scripts.js"></script>
     </body>
 </html>
+<?php
+ require 'db.php';
+ //$query="insert into `tbl_chats` (coloum_name) values('".$val."')";
+ //$wisherID = db::getInstance()->dbquery($query);
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
+
+    $query="select * from user where username = :username";
+    $user = db::getInstance()->get_result($query);
+echo($username);
+    //Überprüfung des Passworts
+    if ($user !== false && $passwort === $user['passwort']) {
+        $_SESSION['userid'] = $user['id'];
+        die('Login erfolgreich. Weiter zu <a href="geheim.php">internen Bereich</a>' . $user . 'user');
+    } else {
+        $errorMessage = "E-Mail oder Passwort war ungültig<br>";
+        echo($errorMessage);
+    }
+?>
