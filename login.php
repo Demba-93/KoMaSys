@@ -1,3 +1,8 @@
+
+<?php
+ session_start();
+ require 'db.php';
+ ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Login - SB Admin</title>
+        <title>KoMaSys - Login</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
@@ -61,21 +66,23 @@
     </body>
 </html>
 <?php
- require 'db.php';
- //$query="insert into `tbl_chats` (coloum_name) values('".$val."')";
- //$wisherID = db::getInstance()->dbquery($query);
+ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
 
-    $query="select * from user where username = :username";
-    $user = db::getInstance()->get_result($query);
-echo($username);
+    $db= $conn;
+    $tableName="user";
+    $columns= ['id', 'firstname', 'lastname', 'password'];
+    $condition="username = '".$username . "'";
+    $user = fetch_data($db, $tableName, $columns, $condition);
+    //echo $_SESSION['userid'];
     //Überprüfung des Passworts
-    if ($user !== false && $passwort === $user['passwort']) {
-        $_SESSION['userid'] = $user['id'];
-        die('Login erfolgreich. Weiter zu <a href="geheim.php">internen Bereich</a>' . $user . 'user');
+    if ($user !== false && $password === $user[0]['password']) {
+        $_SESSION['userid'] = $user[0]['id'];
+        echo "<script>window.location = 'http://" . $_SERVER['HTTP_HOST'] . "/index.php'</script>";
     } else {
         $errorMessage = "E-Mail oder Passwort war ungültig<br>";
         echo($errorMessage);
     }
+}
 ?>

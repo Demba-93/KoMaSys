@@ -1,3 +1,30 @@
+<?php
+include("db.php");
+$db= $conn;
+$tableName="error_messages";
+$columns= ['id', 'study_course','course','source','fault',"suggestion", "created_at", "in_process", "corrected", "rejected", "answer", "read_at"];
+$condition="id = ".$_GET['id'];
+$data = fetch_data($db, $tableName, $columns, $condition)[0];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['corrected'])) {
+        $sql = "UPDATE error_messages SET corrected=1, rejected=0, answer='".$_REQUEST['answer']."' WHERE id=".$_GET['id'];
+    } else {
+        $sql = "UPDATE error_messages SET corrected=0, rejected=1, answer='".$_REQUEST['answer']."' WHERE id=".$_GET['id'];
+    }
+    $res = insert_data($db, $sql);
+    if($res === 'success'){
+        echo "<script>window.location = 'http://" . $_SERVER['HTTP_HOST'] . "/index.php'</script>";
+    } else {
+        echo $res;
+    }
+} else {
+    if (!isset($data['read_at'])){
+        $sql = "UPDATE error_messages SET read_at ='".date("Y-m-d")."' WHERE id=".$_GET['id']."AND tutor_user_id = 2"; //session.userid
+        insert_data($db, $sql);
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -42,36 +69,43 @@
                     <div class="card-body">
                         <div class="row">
                             <label class="col-4">ID</label>
-                            <label class="col-8">23</label>
+                            <label class="col-8"><?php echo $data['id'];?></label>
                         </div>
                         <div class="row">
                             <label class="col-4">Kurs</label>
-                            <label class="col-8">IPWA01</label>
+                            <label class="col-8"><?php echo $data['course'];?></label>
                         </div>
                         <div class="row">
                             <label class="col-4">Fehlerquelle</label>
-                            <label class="col-8">PDF-Skript</label>
+                            <label class="col-8"><?php echo $data['source'];?></label>
                         </div>
                         <div class="row">
                             <label class="col-4">Meldedatum</label>
-                            <label class="col-8">2011/04/25</label>
+                            <label class="col-8"><?php echo $data['created_at'];?></label>
                         </div>
                         <div class="row">
                             <label class="col-4">Fehlerbeschreibung</label>
-                            <label class="col-8">Es gibt einen Tippfehler in Absatz 2 auf S. 34.</label>
+                            <label class="col-8"><?php echo $data['fault'];?></label>
                         </div>
                         <div class="row">
                             <label class="col-4">Korrekturvorschlag</label>
-                            <label class="col-8"></label>
+                            <label class="col-8"><?php echo $data['suggestion'];?></label>
                         </div>
-                        <form>
-                            <div class="form-group row">
-                                <label for="note" class="col-4">Antwort</label>
-                                <textarea class="form-control col-8" id="note"></textarea>
+                        <?php if ($data['corrected'] === '1' || $data['rejected'] === '1') { ?>
+                            <div class="row">
+                                <label class="col-4">Antwort</label>
+                                <label class="col-8"><?php echo $data['answer'];?></label>
                             </div>
-                            <button type="submit" class="btn btn-success mt-2">Abgeschlossen</button>
-                            <button type="submit" class="btn btn-danger mt-2">Ablehnen</button>
-                        </form>
+                        <?php } else  { ?>
+                            <form method=POST>
+                                <div class="form-group row">
+                                    <label for="note" class="col-4">Antwort</label>
+                                    <textarea class="form-control col-8" name="answer" id="answer"></textarea>
+                                </div>
+                                <input type="submit" name="corrected" value="Abgeschlossen" class="btn btn-success mt-2">
+                                <input type="submit" name="reject" value="Ablehnen" class="btn btn-danger mt-2">
+                            </form>
+                        <?php } ?>
                     </div>
                 </main>
 

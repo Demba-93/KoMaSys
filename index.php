@@ -1,13 +1,16 @@
 <?php
-session_start();
-if(!isset($_SESSION['userid'])) {
-    die('Bitte zuerst <a href="login.php">einloggen</a>');
-}
- 
-//Abfrage der Nutzer ID vom Login
-$userid = $_SESSION['userid'];
- 
-echo "Hallo User: ".$userid;
+    include("db.php");
+    session_start();
+    /*if(!isset($_SESSION['userid'])) {
+        echo "<script>window.location = 'http://localhost:9000/login.php'</script>";
+    }*/
+    
+    $userid = 1;//$_SESSION['userid'];
+    $db= $conn;
+    $tableName="error_messages";
+    $columns= ['id', 'study_course','course','source','fault', "created_at", "read_at", "in_process", "rejected", "corrected"];
+    $condition="created_user_id ='".$userid."' OR  tutor_user_id = '".$userid."'";
+    $fetchData = fetch_data($db, $tableName, $columns, $condition);
 ?>
 
 <!DOCTYPE html>
@@ -76,20 +79,28 @@ echo "Hallo User: ".$userid;
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td><a href="./answer.php">23</a></td>
-                                            <td>IPWA01</td>
-                                            <td>PDF Skript</td>
-                                            <td>2011/04/25</td>
-                                            <td>offen</td>
+                                    <?php
+                                        if(is_array($fetchData)){      
+                                        $sn=1;
+                                        foreach($fetchData as $data){
+                                    ?>
+                                        <tr style="<?php echo !isset($data['read_at']) ? 'background-color: #DBE8FA' : '' ?>">
+                                            <td><a href="./answer.php?id=<?php echo $data['id']; ?>" ><?php echo $data['id']; ?></a></td>
+                                            <td><?php echo explode(' ',$data['course'])[0]; ?></td>
+                                            <td><?php echo $data['source']; ?></td>
+                                            <td><?php echo $data['created_at']; ?></td>
+                                            <td><?php echo $data['corrected'] === '1' ? 'Abgeschlossen': $data['rejected'] === '1' ? 'Abgelehnt' : 'Offen';?></td>
                                         </tr>
+                                    <?php
+                                        $sn++;}
+                                        }else{ 
+                                    ?>
+                                         <tr>
+                                            <td colspan="8">
+                                                <?php echo $fetchData; ?>
+                                            </td>
                                         <tr>
-                                            <td><a href="./archive.php">27</a></td>
-                                            <td>IOBP</td>
-                                            <td>Online Test</td>
-                                            <td>2011/07/25</td>
-                                            <td>abgeschlossen</td>
-                                        </tr>
+                                    <?php }?>
                                     </tbody>
                                 </table>
                             </div>
@@ -119,15 +130,6 @@ echo "Hallo User: ".$userid;
 <script>
     $(document).ready(function() {
         console.log( "ready!" );
-        d3.csv("/data/errormessages.csv/", function(data) {
-            for (var i = 0; i < data.length; i++) {
-                console.log(data[i].ID);
-                console.log(data[i].module);
-                console.log(data[i].source);
-                console.log(data[i].createdDate);
-            }
-        });
-
         $('#datatablesSimple').DataTable( {
             language: {
                 url: 'dataTables.german.json'
