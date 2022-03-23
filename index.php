@@ -3,7 +3,7 @@
     session_start();
 
     if(!isset($_SESSION['userid'])) {
-        echo "<script>window.location = 'http://localhost:9000/login.php'</script>";
+        echo "<script>window.location = 'http://" . $_SERVER['HTTP_HOST'] . "/login.php'</script>";
     }
     
     $userid = $_SESSION['userid'];

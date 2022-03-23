@@ -78,11 +78,43 @@
                                 <label class="col-4" for="course">Kurs *</label>
                                 <div class="col-8">
                                     <select class="form-control col-8" name ="course" id="course" required>
-                                        <option>DLBIADPS01	Algorithmen, Datenstrukturen und Programmiersprachen</option>
-                                        <option>DLBIBRVS01	Betriebssysteme, Rechnernetze und verteilte Systeme</option>
-                                        <option>BBWL01-01	BWL I</option>
-                                        <option>BBWL02-01	BWL II</option>
-                                        <option>BWCN01	Business Consulting I</option>
+                                        <option>DLBIADPS01 - Algorithmen, Datenstrukturen und Programmiersprachen</option>
+                                        <option>DLBIBRVS01 - Betriebssysteme, Rechnernetze und verteilte Systeme</option>
+                                        <option>BBWL01 - 01 - BWL I</option>
+                                        <option>BBWL02 - 01 - BWL II</option>
+                                        <option>BWCN01 - Business Consulting I</option>
+                                        <option>BWCN02 - Business Consulting II</option>
+                                        <option>DLBINGDABD01 - Data Analytics und Big Data</option>
+                                        <option>IDBS01 - Datenmodellierung und Datenbanksysteme</option>
+                                        <option>IOBP02 - Datenstrukturen und JAVA Klassenbibliothek</option>
+                                        <option>DLBMDDP01 - Digital Publishing</option>
+                                        <option>DLBMDME01 - Media Engineering</option>
+                                        <option>DLBDS01 - Digital Skills</option>
+                                        <option>DLBINGEIT01 - Einführung in das Internet of Things</option>
+                                        <option>BWIR01 - 01 - Einführung in das wissenschaftliche Arbeiten</option>
+                                        <option>BWEM01 - Eventmanagement I</option>
+                                        <option>BWEM02 - Eventmanagement II</option>
+                                        <option>BWFS01 - Financial Service Management I</option>
+                                        <option>BWFS02 - Financial Service Management II</option>
+                                        <option>IGIS01 - Grundlagen der industriellen Software - Technik</option>
+                                        <option>IOBP01 - Grundlagen der objektorientierten Programmierung mit JAVA</option>
+                                        <option>DLBIIUG01 - Informatik und Gesellschaft</option>
+                                        <option>IPMG01 - IT - Projektmanagement</option>
+                                        <option>DLBIITR01 - IT - Recht</option>
+                                        <option>DLBISIC01 - Einführung in Datenschutz und IT - Sicherheit</option>
+                                        <option>DLBISIC02 - Kryptografische Verfahren</option>
+                                        <option>DLBIKI01 - Künstliche Intelligenz</option>
+                                        <option>IMT101 - Mathematik Grundlagen I</option>
+                                        <option>IMT102 - Mathematik Grundlagen II</option>
+                                        <option>IWNF01 - Techniken und Methoden der agilen Softwareentwicklung</option>
+                                        <option>IPWA01 - Programmierung von Web - Anwendungsoberflächen</option>
+                                        <option>ISSE01 - Projekt: Software Engineering</option>
+                                        <option>IQSS01 - Qualitätssicherung im Software - Prozess</option>
+                                        <option>IREN01 - Requirements Engineering</option>
+                                        <option>ISPE01 - Spezifikation</option>
+                                        <option>BSTA01 - 01 - Statistik</option>
+                                        <option>DLBITIML01 - Theoretische Informatik und Mathematische Logik</option>
+                                        <option>DLBMIUID01 - Gestaltung und Ergonomie von User Interfaces</option>
                                     </select>
                                 </div>
                             </div>
