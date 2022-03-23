@@ -1,11 +1,12 @@
 <?php
     include("db.php");
     session_start();
-    /*if(!isset($_SESSION['userid'])) {
+
+    if(!isset($_SESSION['userid'])) {
         echo "<script>window.location = 'http://localhost:9000/login.php'</script>";
-    }*/
+    }
     
-    $userid = 1;//$_SESSION['userid'];
+    $userid = $_SESSION['userid'];
     $db= $conn;
     $tableName="error_messages";
     $columns= ['id', 'study_course','course','source','fault', "created_at", "read_at", "in_process", "rejected", "corrected"];
@@ -46,7 +47,7 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Angemeldet als:<br/>Username <a href="./login.php">Ausloggen</a></div>
+                        <div class="small">Angemeldet als:<br/><?php echo $_SESSION['username'];?> <a href="./login.php">Ausloggen</a></div>
                     </div>
                 </nav>
             </div>
@@ -55,7 +56,9 @@
                     <div class="container-fluid px-4">
                         <div class="row">
                             <h1 class="mt-4 col-8">Fehlermeldungen</h1>
-                            <a href="./newerror.php" class="col-3 mt-4 mb-4 btn btn-secondary" role="button"><i class="fa fa-plus-circle"></i> Neue Fehlermeldung</a>
+                            <?php if ($_SESSION['student'] == '1') {?>
+                                <a href="./newerror.php" class="col-3 mt-4 mb-4 btn btn-secondary" role="button"><i class="fa fa-plus-circle"></i> Neue Fehlermeldung</a>
+                            <?php } ?>
                         </div>
                         <div class="card mb-4">
                             <div class="card-body">
@@ -80,7 +83,7 @@
                                     </tfoot>
                                     <tbody>
                                     <?php
-                                        if(is_array($fetchData)){      
+                                    if(is_array($fetchData)){      
                                         $sn=1;
                                         foreach($fetchData as $data){
                                     ?>
@@ -93,7 +96,7 @@
                                         </tr>
                                     <?php
                                         $sn++;}
-                                        }else{ 
+                                    }else{ 
                                     ?>
                                          <tr>
                                             <td colspan="8">
@@ -114,7 +117,7 @@
                             <div>
                                 <a href="https://login.iubh.de/policy/impressum_de.pdf" target="blank">Impressum</a>
                                 &middot;
-                                <a href="https://login.iubh.de/policy/privacy_policy_de.pdf" target="blank">DAtenschutzerklärung</a>
+                                <a href="https://login.iubh.de/policy/privacy_policy_de.pdf" target="blank">Datenschutzerklärung</a>
                             </div>
                         </div>
                     </div>
@@ -129,10 +132,9 @@
 </html>
 <script>
     $(document).ready(function() {
-        console.log( "ready!" );
         $('#datatablesSimple').DataTable( {
             language: {
-                url: 'dataTables.german.json'
+                url: '/localisation/fr_FR.json'
             }
         } );
     } );

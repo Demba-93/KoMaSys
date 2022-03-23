@@ -1,5 +1,6 @@
 <?php
 include("db.php");
+session_start();
 $db= $conn;
 $tableName="error_messages";
 $columns= ['id', 'study_course','course','source','fault',"suggestion", "created_at", "in_process", "corrected", "rejected", "answer", "read_at"];
@@ -19,8 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo $res;
     }
 } else {
-    if (!isset($data['read_at'])){
-        $sql = "UPDATE error_messages SET read_at ='".date("Y-m-d")."' WHERE id=".$_GET['id']."AND tutor_user_id = 2"; //session.userid
+    if (!isset($data['read_at']) && $_SESSION['student'] !== '1'){
+        $sql = "UPDATE error_messages SET read_at ='".date("Y-m-d")."' WHERE id=".$_GET['id']." AND tutor_user_id = 2"; //session.userid
         insert_data($db, $sql);
     }
 }
@@ -56,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Angemeldet als:<br/>Username <a href="./login.php">Ausloggen</a></div>
+                        <div class="small">Angemeldet als:<br/><?php echo $_SESSION['username'];?> <a href="./login.php">Ausloggen</a></div>
                     </div>
                 </nav>
             </div>
@@ -91,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <label class="col-4">Korrekturvorschlag</label>
                             <label class="col-8"><?php echo $data['suggestion'];?></label>
                         </div>
-                        <?php if ($data['corrected'] === '1' || $data['rejected'] === '1') { ?>
+                        <?php if ($data['corrected'] === '1' || $data['rejected'] === '1' || $_SESSION['student'] === '1') { ?>
                             <div class="row">
                                 <label class="col-4">Antwort</label>
                                 <label class="col-8"><?php echo $data['answer'];?></label>

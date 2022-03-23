@@ -1,7 +1,27 @@
-
 <?php
- session_start();
  require 'db.php';
+ session_start();
+ if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
+
+    $db= $conn;
+    $tableName="user";
+    $columns= ['id', 'firstname', 'lastname', 'password'];
+    $condition="username = '".$username . "'";
+    $user = fetch_data($db, $tableName, $columns, $condition);
+    if ($user !== false && $password === $user[0]['password']) {
+        $_SESSION['userid'] = $user[0]['id'];
+        $_SESSION['username'] = $username;
+        $_SESSION['student'] = $user[0]['id'];
+        echo "<script>window.location = 'http://" . $_SERVER['HTTP_HOST'] . "/index.php'</script>";
+    } else {
+        $errorMessage = "E-Mail oder Passwort war ungültig<br>";
+        echo($errorMessage);
+    }
+} else {
+    $_SESSION = [];
+}
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,11 +47,11 @@
                                     <div class="card-body">
                                         <form method="post" >
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" name="username" id="inputEmail" type="text" placeholder="name@example.com" />
+                                                <input class="form-control" name="username" id="inputEmail" type="text" placeholder="name@example.com" required/>
                                                 <label for="inputEmail">Benutzername</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" name="password" id="inputPassword" type="password" placeholder="Password" />
+                                                <input class="form-control" name="password" id="inputPassword" type="password" placeholder="Password" required/>
                                                 <label for="inputPassword">Passwort</label>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
@@ -54,7 +74,7 @@
                             <div>
                                 <a href="https://login.iubh.de/policy/impressum_de.pdf" target="blank">Impressum</a>
                                 &middot;
-                                <a href="https://login.iubh.de/policy/privacy_policy_de.pdf" target="blank">DAtenschutzerklärung</a>
+                                <a href="https://login.iubh.de/policy/privacy_policy_de.pdf" target="blank">Datenschutzerklärung</a>
                             </div>
                         </div>
                     </div>
@@ -65,24 +85,3 @@
         <script src="js/scripts.js"></script>
     </body>
 </html>
-<?php
- if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
-
-    $db= $conn;
-    $tableName="user";
-    $columns= ['id', 'firstname', 'lastname', 'password'];
-    $condition="username = '".$username . "'";
-    $user = fetch_data($db, $tableName, $columns, $condition);
-    //echo $_SESSION['userid'];
-    //Überprüfung des Passworts
-    if ($user !== false && $password === $user[0]['password']) {
-        $_SESSION['userid'] = $user[0]['id'];
-        echo "<script>window.location = 'http://" . $_SERVER['HTTP_HOST'] . "/index.php'</script>";
-    } else {
-        $errorMessage = "E-Mail oder Passwort war ungültig<br>";
-        echo($errorMessage);
-    }
-}
-?>

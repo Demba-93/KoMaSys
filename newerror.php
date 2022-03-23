@@ -1,5 +1,6 @@
 <?php
   include("db.php");
+  session_start();
   
   $db = $conn;
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -11,7 +12,7 @@
         
     // Performing insert query execution
     $sql = "INSERT INTO error_messages (`created_at`, `created_user_id`, `study_course`, `course`, `source`, `fault`, `suggestion`, `tutor_user_id`) 
-        VALUES ( '".date("Y-m-d")."', '1', '$studycourse','$course','$source','$fault','$suggestion', 2)";
+        VALUES ( '".date("Y-m-d")."', '".$_SESSION['userid']."', '$studycourse','$course','$source','$fault','$suggestion', 2)";
     $res = insert_data($db, $sql);
     if($res === 'success'){
         echo "<script>window.location = 'http://" . $_SERVER['HTTP_HOST'] . "/index.php'</script>";
@@ -52,7 +53,7 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Angemeldet als:<br/>Username <a href="./login.php">Ausloggen</a></div>
+                        <div class="small">Angemeldet als:<br/><?php echo $_SESSION['username'];?> <a href="./login.php">Ausloggen</a></div>
                     </div>
                 </nav>
             </div>
@@ -64,43 +65,53 @@
                     </div>
                     <div class="card-body">
                         <form action="newerror.php" method="post">
-                            <div class="form-group row">
+                            <div class="form-group row p-1">
                                 <label class="col-4" for="studycourse">Studiengang *</label>
-                                <select class="form-control col-8" name ="studycourse" id="studycourse">
-                                    <option>B. Sc. Informatik</option>
-                                    <option>B. Sc. Wirtschaftsinformatik</option>
-                                </select>
+                                <div class="col-8">
+                                    <select class="form-control col-8" name ="studycourse" id="studycourse" disabled>
+                                        <option>B. Sc. Informatik</option>
+                                        <option>B. Sc. Wirtschaftsinformatik</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row p-1">
                                 <label class="col-4" for="course">Kurs *</label>
-                                <select class="form-control col-8" name ="course" id="course">
-                                    <option>DLBIADPS01	Algorithmen, Datenstrukturen und Programmiersprachen</option>
-                                    <option>DLBIBRVS01	Betriebssysteme, Rechnernetze und verteilte Systeme</option>
-                                    <option>BBWL01-01	BWL I</option>
-                                    <option>BBWL02-01	BWL II</option>
-                                    <option>BWCN01	Business Consulting I</option>
-                                </select>
+                                <div class="col-8">
+                                    <select class="form-control col-8" name ="course" id="course" required>
+                                        <option>DLBIADPS01	Algorithmen, Datenstrukturen und Programmiersprachen</option>
+                                        <option>DLBIBRVS01	Betriebssysteme, Rechnernetze und verteilte Systeme</option>
+                                        <option>BBWL01-01	BWL I</option>
+                                        <option>BBWL02-01	BWL II</option>
+                                        <option>BWCN01	Business Consulting I</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row p-1">
                                 <label class="col-4" for="source">Fehlerquelle *</label>
-                                <select class="form-control col-8" name ="source" id="source">
-                                  <option>PDF-Skript</option>
-                                  <option>Gedrucktes Skript</option>
-                                  <option>Online Test</option>
-                                  <option>Podcast</option>
-                                  <option>Videogalerie</option>
-                                  <option>Reader (IU Learn App)</option>
-                                  <option>Interactive Quiz (IU Learn App)</option>
-                                  <option>KurzVideos (IU Learn App)</option>
-                                </select>
+                                <div class="col-8">
+                                    <select class="form-control" name ="source" id="source" required>
+                                    <option>PDF-Skript</option>
+                                    <option>Gedrucktes Skript</option>
+                                    <option>Online Test</option>
+                                    <option>Podcast</option>
+                                    <option>Videogalerie</option>
+                                    <option>Reader (IU Learn App)</option>
+                                    <option>Interactive Quiz (IU Learn App)</option>
+                                    <option>KurzVideos (IU Learn App)</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row p-1">
                                 <label for="fault" class="col-4">Fehlerbeschreibung *</label>
-                                <textarea class="form-control col-8" name ="fault" id="fault"></textarea>
+                                <div class="col-8">
+                                    <textarea class="form-control" name ="fault" id="fault" required></textarea>
+                                </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row p-1">
                                 <label for="suggestion" class="col-4">Korrekturvorschlag</label>
-                                <textarea class="form-control col-8" name ="suggestion" id="suggestion"></textarea>
+                                <div class="col-8">
+                                    <textarea class="form-control col-8" name ="suggestion" id="suggestion"></textarea>
+                                </div>
                             </div>
                             <span class="small">* Pflichtfeld</span><br/>
                             <button type="submit" class="btn btn-info mt-2">Senden</button>
