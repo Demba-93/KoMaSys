@@ -10,7 +10,7 @@ $userid = $_SESSION['userid'];
 $db = $conn;
 $tableName = "error_messages";
 $columns = ['id', 'study_course', 'course', 'source', 'fault', "created_at", "read_at", "in_process", "rejected", "corrected"];
-$condition = "created_user_id ='" . $userid . "' OR  tutor_user_id = '" . $userid . "'";
+$condition = "(created_user_id ='" . $userid . "' OR  tutor_user_id = '" . $userid . "') AND archive = 0";
 $fetchData = fetch_data($db, $tableName, $columns, $condition);
 ?>
 
@@ -43,8 +43,12 @@ $fetchData = fetch_data($db, $tableName, $columns, $condition);
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <a class="nav-link" href="index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fas fa-house"></i></div>
                             Hauptmenü
+                        </a>
+                        <a class="nav-link" href="archive.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-clock"></i></div>
+                            Archiv
                         </a>
                     </div>
                 </div>
@@ -89,12 +93,12 @@ $fetchData = fetch_data($db, $tableName, $columns, $condition);
                                         $sn = 1;
                                         foreach ($fetchData as $data) {
                                     ?>
-                                            <tr style="<?php echo !isset($data['read_at']) ? 'background-color: #DBE8FA' : '' ?>">
+                                            <tr style="<?php echo !isset($data['read_at']) && $_SESSION['student'] !== '1' ? 'background-color: #DBE8FA' : '' ?>">
                                                 <td><a href="./answer.php?id=<?php echo $data['id']; ?>"><?php echo $data['id']; ?></a></td>
                                                 <td><?php echo explode(' ', $data['course'])[0]; ?></td>
                                                 <td><?php echo $data['source']; ?></td>
                                                 <td><?php echo $data['created_at']; ?></td>
-                                                <td><?php echo $data['corrected'] === '1' ? 'Abgeschlossen' : $data['rejected'] === '1' ? 'Abgelehnt' : 'Offen'; ?></td>
+                                                <td><?php echo isset($data['read_at']) ? 'Gelsen' : 'Offen'; ?></td>
                                             </tr>
                                         <?php
                                             $sn++;

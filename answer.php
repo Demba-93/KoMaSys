@@ -9,9 +9,9 @@ $data = fetch_data($db, $tableName, $columns, $condition)[0];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['corrected'])) {
-        $sql = "UPDATE error_messages SET corrected=1, rejected=0, answer='" . $_REQUEST['answer'] . "' WHERE id=" . $_GET['id'];
+        $sql = "UPDATE error_messages SET corrected=1, rejected=0, archive=1, answer='" . $_REQUEST['answer'] . "' WHERE id=" . $_GET['id'];
     } else {
-        $sql = "UPDATE error_messages SET corrected=0, rejected=1, answer='" . $_REQUEST['answer'] . "' WHERE id=" . $_GET['id'];
+        $sql = "UPDATE error_messages SET corrected=0, rejected=1, archive=1, answer='" . $_REQUEST['answer'] . "' WHERE id=" . $_GET['id'];
     }
     $res = insert_data($db, $sql);
     if ($res === 'success') {
@@ -53,8 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <a class="nav-link" href="index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fas fa-house"></i></div>
                             Hauptmenü
+                        </a>
+                        <a class="nav-link" href="archive.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-clock"></i></div>
+                            Archiv
                         </a>
                     </div>
                 </div>
@@ -66,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div id="layoutSidenav_content">
             <main>
                 <div class="card-header">
-                    <a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a>
+                    <a href="/index.php"><i class="fas fa-arrow-left"></i></a>
                     Fehlermeldung
                 </div>
                 <div class="card-body">
