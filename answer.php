@@ -70,7 +70,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div id="layoutSidenav_content">
             <main>
                 <div class="card-header">
-                    <a href="/index.php"><i class="fas fa-arrow-left"></i></a>
+                    <?php if ($data['corrected'] === '1' || $data['rejected'] === '1') { ?>
+                        <a href="/archive.php"><i class="fas fa-arrow-left"></i></a>
+                    <?php } else { ?>
+                        <a href="/index.php"><i class="fas fa-arrow-left"></i></a>
+                    <?php } ?>
                     Fehlermeldung
                 </div>
                 <div class="card-body">

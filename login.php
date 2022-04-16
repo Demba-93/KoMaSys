@@ -17,7 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>window.location = 'http://" . $_SERVER['HTTP_HOST'] . "/index.php'</script>";
     } else {
         $errorMessage = "E-Mail oder Passwort war ungültig<br>";
-        echo ($errorMessage);
     }
 } else {
     $_SESSION = [];
@@ -34,6 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="author" content="" />
     <title>KoMaSys - Login</title>
     <link href="css/styles.css" rel="stylesheet" />
+  <script src="alert/dist/sweetalert-dev.js"></script>
+  <link rel="stylesheet" href="alert/dist/sweetalert.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 
@@ -58,6 +59,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <input class="form-control" name="password" id="inputPassword" type="password" placeholder="Password" required />
                                             <label for="inputPassword">Passwort</label>
                                         </div>
+                                        <?php
+                                            if(isset($errorMessage)){
+                                                echo "<span class='text-danger'>$errorMessage</span>";
+                                            }
+                                        ?> 
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                             <a class="small" href="https://identity.iubh.de/service/public/forgottenpassword" target="blank">Passwort vergessen?</a>
                                             <input type="submit" value="Login" />

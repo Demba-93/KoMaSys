@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>window.location = 'http://" . $_SERVER['HTTP_HOST'] . "/index.php'</script>";
     } else {
         echo $res;
+        //echo "<script>console.log(".$res.")</script>";
     }
 }
 
