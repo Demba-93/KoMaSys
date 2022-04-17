@@ -11,14 +11,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $suggestion = $_REQUEST['suggestion'];
 
     // Performing insert query execution
-    $sql = "INSERT INTO error_messages (`created_at`, `created_user_id`, `study_course`, `course`, `source`, `fault`, `suggestion`, `tutor_user_id`, 'archive') 
+    $sql = "INSERT INTO error_messages (`created_at`, `created_user_id`, `study_course`, `course`, `source`, `fault`, `suggestion`, `tutor_user_id`, `archive`) 
         VALUES ( '" . date("Y-m-d") . "', '" . $_SESSION['userid'] . "', '$studycourse','$course','$source','$fault','$suggestion', 2, 0)";
     $res = insert_data($db, $sql);
     if ($res === 'success') {
         echo "<script>window.location = 'http://" . $_SERVER['HTTP_HOST'] . "/index.php'</script>";
     } else {
         echo $res;
-        //echo "<script>console.log(".$res.")</script>";
     }
 }
 
