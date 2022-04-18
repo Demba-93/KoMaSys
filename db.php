@@ -9,7 +9,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-function fetch_data($db, $tableName, $columns, $condition){
+function fetch_data($db, $tableName, $columns, $condition, $noOrder = false){
   if(empty($db)){
    $msg= "Database connection error";
   }elseif (empty($columns) || !is_array($columns)) {
@@ -18,7 +18,11 @@ function fetch_data($db, $tableName, $columns, $condition){
     $msg= "Table Name is empty";
   }else{
     $columnName = implode(", ", $columns);
-    $query = "SELECT ".$columnName." FROM $tableName WHERE $condition"." ORDER BY id DESC";
+    if(!$noOrder) {
+      $query = "SELECT ".$columnName." FROM $tableName WHERE $condition"." ORDER BY id DESC";
+    } else {
+      $query = "SELECT ".$columnName." FROM $tableName WHERE $condition";
+    }
     $result = $db->query($query);
     if($result== true){ 
       if ($result->num_rows > 0) {
@@ -28,7 +32,7 @@ function fetch_data($db, $tableName, $columns, $condition){
         $msg= "No Data Found"; 
       }
     }else{
-      $msg= mysqli_error($db);
+      $msg= mysqli_error($db) . 'Query: ' . $query;
     }
   }
   return $msg;

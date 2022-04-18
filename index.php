@@ -6,12 +6,30 @@ if (!isset($_SESSION['userid'])) {
     echo "<script>window.location = 'http://" . $_SERVER['HTTP_HOST'] . "/login.php'</script>";
 }
 
+if (!function_exists('str_ends_with')) {
+    function str_ends_with($haystack, $needle, $case = true)
+    {
+      $expectedPosition = strlen($haystack) - strlen($needle);
+      if ($case) {
+        return strrpos($haystack, $needle, 0) === $expectedPosition;
+      }
+      return strripos($haystack, $needle, 0) === $expectedPosition;
+    }
+}
+
 $userid = $_SESSION['userid'];
 $db = $conn;
 $tableName = "error_messages";
 $columns = ['id', 'study_course', 'course', 'source', 'fault', "created_at", "read_at", "in_process", "rejected", "corrected"];
 $condition = "(created_user_id ='" . $userid . "' OR  tutor_user_id = '" . $userid . "') AND archive = 0";
 $fetchData = fetch_data($db, $tableName, $columns, $condition);
+
+if(str_ends_with($_SERVER['HTTP_REFERER'], 'login.php') && $_SESSION['student'] == '1') {
+    $tableName = "error_messages";
+    $count = ['count(*) as c'];
+    $archiveCondition = "created_user_id ='" . $userid . "' AND archive = 1 and archive_read_at IS NULL ";
+    $archiveCount = fetch_data($db, $tableName, $count, $archiveCondition, true);
+}
 ?>
 
 <!DOCTYPE html>
@@ -64,6 +82,11 @@ $fetchData = fetch_data($db, $tableName, $columns, $condition);
                         <h1 class="mt-4 col-8">Fehlermeldungen</h1>
                         <?php if ($_SESSION['student'] == '1') { ?>
                             <a href="./newerror.php" class="col-3 mt-4 mb-4 btn btn-secondary" role="button"><i class="fa fa-plus-circle"></i> Neue Fehlermeldung</a>
+                        <?php } ?>
+                        <?php if (isset($archiveCount)) { ?>
+                            <span class="text-danger">
+                                Hinweis: Es befinden sich <?php echo $archiveCount[0]['c'] ?> neue Fehlermeldungen im <a href="archive.php">Archiv</a>
+                            </span>
                         <?php } ?>
                     </div>
                     <div class="card mb-4">
@@ -138,12 +161,3 @@ $fetchData = fetch_data($db, $tableName, $columns, $condition);
 </body>
 
 </html>
-<script>
-    $(document).ready(function() {
-        $('#datatablesSimple').DataTable({
-            language: {
-                url: '/localisation/fr_FR.json'
-            }
-        });
-    });
-</script>

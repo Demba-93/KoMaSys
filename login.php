@@ -7,13 +7,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $db = $conn;
     $tableName = "user";
-    $columns = ['id', 'firstname', 'lastname', 'password'];
+    $columns = ['id', 'firstname', 'lastname', 'student', 'password'];
     $condition = "username = '" . $username . "'";
     $user = fetch_data($db, $tableName, $columns, $condition);
     if ($user !== false && $password === $user[0]['password']) {
         $_SESSION['userid'] = $user[0]['id'];
         $_SESSION['username'] = $username;
-        $_SESSION['student'] = $user[0]['id'];
+        $_SESSION['student'] = $user[0]['student'];
         echo "<script>window.location = 'http://" . $_SERVER['HTTP_HOST'] . "/index.php'</script>";
     } else {
         $errorMessage = "E-Mail oder Passwort war ungültig<br>";

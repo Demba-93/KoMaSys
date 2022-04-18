@@ -3,7 +3,7 @@ include("db.php");
 session_start();
 $db = $conn;
 $tableName = "error_messages";
-$columns = ['id', 'study_course', 'course', 'source', 'fault', "suggestion", "created_at", "in_process", "corrected", "rejected", "answer", "read_at"];
+$columns = ['id', 'study_course', 'course', 'source', 'fault', "suggestion", "created_at", "in_process", "corrected", "rejected", "answer", "read_at", "archive_read_at"];
 $condition = "id = " . $_GET['id'];
 $data = fetch_data($db, $tableName, $columns, $condition)[0];
 
@@ -21,7 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 } else {
     if (!isset($data['read_at']) && $_SESSION['student'] !== '1') {
-        $sql = "UPDATE error_messages SET read_at ='" . date("Y-m-d") . "' WHERE id=" . $_GET['id'] . " AND tutor_user_id = 2"; //session.userid
+        $sql = "UPDATE error_messages SET read_at ='" . date("Y-m-d") . "' WHERE id=" . $_GET['id'];
+        insert_data($db, $sql);
+    } else if (!isset($data['archive_read_at']) && $_SESSION['student'] == '1') {
+        $sql = "UPDATE error_messages SET archive_read_at ='" . date("Y-m-d") . "' WHERE id=" . $_GET['id'];
         insert_data($db, $sql);
     }
 }
