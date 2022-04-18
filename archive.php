@@ -130,10 +130,15 @@ $fetchData = fetch_data($db, $tableName, $columns, $condition);
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
-    <!--<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>-->
-    <script src="js/simpleDataTable" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <!--<script src="js/simpleDataTable" ></script>-->
     <script src="js/datatables-simple-demo.js"></script>
-    <script src="//cdn.datatables.net/plug-ins/1.11.5/i18n/de-DE.json"></script>
 </body>
 
 </html>
+
+<script>
+   /* $("document").ready(function() {
+        document.body.innerHTML = document.body.innerHTML.replace('entries per page', 'Einträge pro Seite').replace('Showing', 'Zeigt').replace(/to/g, 'bis').replace(/of/g, 'von').replace(/entries/g, 'Einträgen').replace(/Search/g, 'Suchen').replace('No results match your search query', 'Es wurde keine Ergebnisse zu Ihre Anfrage gefunden');
+    });*/
+</script>
