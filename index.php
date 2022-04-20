@@ -61,11 +61,9 @@ if(str_ends_with($_SERVER['HTTP_REFERER'], 'login.php') && $_SESSION['student'] 
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <a class="nav-link" href="index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-house"></i></div>
                             Hauptmenü
                         </a>
                         <a class="nav-link" href="archive.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-clock"></i></div>
                             Archiv
                         </a>
                     </div>
@@ -85,7 +83,7 @@ if(str_ends_with($_SERVER['HTTP_REFERER'], 'login.php') && $_SESSION['student'] 
                         <?php } ?>
                         <?php if (isset($archiveCount)) { ?>
                             <span class="text-danger">
-                                Hinweis: Es befinden sich <?php echo $archiveCount[0]['c'] ?> neue Fehlermeldungen im <a href="archive.php">Archiv</a>
+                                Hinweis: Es befinden sich <?php echo $archiveCount[0]['c'] ?> ungelesene Fehlermeldungen im <a href="archive.php">Archiv</a>
                             </span>
                         <?php } ?>
                     </div>

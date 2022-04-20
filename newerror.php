@@ -49,11 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <a class="nav-link" href="index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-house"></i></div>
                             Hauptmenü
                         </a>
                         <a class="nav-link" href="archive.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-clock"></i></div>
                             Archiv
                         </a>
                     </div>

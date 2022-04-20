@@ -9,7 +9,7 @@ if (!isset($_SESSION['userid'])) {
 $userid = $_SESSION['userid'];
 $db = $conn;
 $tableName = "error_messages";
-$columns = ['id', 'study_course', 'course', 'source', 'fault', "created_at", "read_at", "in_process", "rejected", "corrected"];
+$columns = ['id', 'study_course', 'course', 'source', 'fault', "created_at", "read_at", "in_process", "rejected", "corrected", "archive_read_at"];
 $condition = "(created_user_id ='" . $userid . "' OR  tutor_user_id = '" . $userid . "') AND archive = 1";
 $fetchData = fetch_data($db, $tableName, $columns, $condition);
 ?>
@@ -43,11 +43,9 @@ $fetchData = fetch_data($db, $tableName, $columns, $condition);
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <a class="nav-link" href="index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-house"></i></div>
                             Hauptmenü
                         </a>
                         <a class="nav-link" href="archive.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-clock"></i></div>
                             Archiv
                         </a>
                     </div>
@@ -90,7 +88,7 @@ $fetchData = fetch_data($db, $tableName, $columns, $condition);
                                         $sn = 1;
                                         foreach ($fetchData as $data) {
                                     ?>
-                                            <tr style="<?php echo !isset($data['read_at']) && $_SESSION['student'] !== '1' ? 'background-color: #DBE8FA' : '' ?>">
+                                            <tr style="<?php echo !isset($data['archive_read_at']) && $_SESSION['student'] == '1' ? 'background-color: #DBE8FA' : '' ?>">
                                                 <td><a href="./answer.php?id=<?php echo $data['id']; ?>"><?php echo $data['id']; ?></a></td>
                                                 <td><?php echo explode(' ', $data['course'])[0]; ?></td>
                                                 <td><?php echo $data['source']; ?></td>
